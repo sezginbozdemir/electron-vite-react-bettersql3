@@ -1,17 +1,23 @@
+import log from "../logger";
 export const response = {
-  ok: (data?: { code?: number; msg?: string; data?: any }) => {
-    return {
+  ok: (data?: { code?: number; message?: string; data?: unknown }) => {
+    const res = {
       code: 200,
-      msg: "success",
+      message: "success",
       data: null,
       ...data,
     };
+    log.info(`response ok | code: ${res.code} | msg: ${res.message}`);
+    return res;
   },
-  error: (data?: { code?: number; msg?: string; data?: any }) => {
-    return {
+
+  error: (data?: { code?: number; message?: string; data?: unknown }) => {
+    const res = {
       code: 500,
-      msg: "failure",
+      message: "failure",
       ...data,
     };
+    log.error(`response error | code: ${res.code} | msg: ${res.message}`);
+    return res;
   },
 };

@@ -7,7 +7,7 @@ export class ProductService {
     const res = await db.select().from(products).where(eq(products.id, id));
 
     if (!res) {
-      return response.error({ msg: "product not found" });
+      return response.error({ message: "product not found" });
     }
     return response.ok({ data: res?.[0] });
   }
@@ -16,10 +16,10 @@ export class ProductService {
       const product = await tx.delete(products).where(eq(products.id, id));
       if (!product) {
         tx.rollback();
-        response.error({ msg: "product not found" });
+        response.error({ message: "product not found" });
       }
 
-      return response.error();
+      return response.ok();
     });
   }
 
