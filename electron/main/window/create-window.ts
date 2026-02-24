@@ -2,7 +2,6 @@ import { BrowserWindow, Menu, Tray, app } from "electron";
 import path from "path";
 import { getDirname } from "../utils";
 import { isProd } from "../utils";
-import log from "../logger";
 
 const dirname = getDirname(import.meta.url);
 const preloadIndex = path.join(dirname, "../preload/index.js");
