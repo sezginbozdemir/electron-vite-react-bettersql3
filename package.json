@@ -2,7 +2,8 @@
   "name": "electron-vite-react-bettersql3",
   "private": true,
   "version": "0.0.1",
-  "type": "module",
+  "type": "commonjs",
+  "main": "./dist-electron/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

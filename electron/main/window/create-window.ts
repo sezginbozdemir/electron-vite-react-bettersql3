@@ -4,7 +4,7 @@ import { getDirname } from "../utils";
 
 const dirname = getDirname(import.meta.url);
 const preloadIndex = path.join(dirname, "../preload/index.js");
-const root = path.join(dirname, "../../");
+const root = path.join(dirname, "../");
 const env = process.env;
 const electronBuild = path.join(dirname, "../../dist/index.html");
 
@@ -27,7 +27,6 @@ export const createWindow = () => {
       contextIsolation: true,
     },
   });
-
   if (env.NODE_ENV === "development" && env.DEV_SERVER_URL) {
     mainWindow.loadURL(env.DEV_SERVER_URL);
   } else {

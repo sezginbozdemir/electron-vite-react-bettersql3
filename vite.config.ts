@@ -4,10 +4,13 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import electron from "vite-plugin-electron/simple";
 import path from "path";
+import { rmSync } from "fs";
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
   const isProd = command === "build";
+  rmSync("dist-electron", { recursive: true, force: true });
+
   return {
     base: "./",
     plugins: [
@@ -15,7 +18,16 @@ export default defineConfig(({ command }) => {
       tailwindcss(),
       tanstackRouter(),
       electron({
-        main: { entry: "electron/main/index.ts" },
+        main: {
+          entry: "electron/main/index.ts",
+          vite: {
+            build: {
+              rollupOptions: {
+                external: ["better-sqlite3"],
+              },
+            },
+          },
+        },
         preload: { input: "electron/preload/index.ts" },
         renderer: {},
       }),

@@ -1,13 +1,9 @@
-import dotenv from "dotenv";
-import path from "path";
-import { getDirname } from "./utils";
 import { BrowserWindow, app } from "electron";
 import log from "./logger";
 import { dbInit } from "./db-init";
 import { addTray, createWindow } from "./window/create-window";
-const dirname = getDirname(import.meta.url);
-
-dotenv.config({ path: path.resolve(dirname, " ../../.env") });
+import { loadEnv } from "../env";
+loadEnv();
 
 app.whenReady().then(async () => {
   log.info("main init");

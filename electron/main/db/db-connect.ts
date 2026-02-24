@@ -21,8 +21,6 @@ export let db: BetterSQLite3Database<typeof schema>;
 
 export const dbConnect = async () => {
   db = drizzle(sqlite, { schema });
-  log.info("db-connect", process.env.NODE_ENV);
-  log.info("db-connect", path.join(dirname, "../../../migrations"));
   if (process.env.NODE_ENV === "production") {
     try {
       migrate(db, {

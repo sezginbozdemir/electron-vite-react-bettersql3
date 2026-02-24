@@ -10,7 +10,7 @@
     "dist/**/*",
     "dist-electron/**/*",
     "migrations/**/*",
-    ".env.production"
+    ".env"
   ],
   "extraResources": [],
   "asarUnpack": [],
