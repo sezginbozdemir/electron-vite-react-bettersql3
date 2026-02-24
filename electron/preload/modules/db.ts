@@ -1,12 +1,7 @@
 import { DB_CONFIG } from "../../main/utils/constants";
 import { ipcRenderer } from "electron";
 import log from "../../main/logger";
-
-export interface QueryOptions {
-  path: string;
-  params?: Record<string, any>;
-  timeout?: number;
-}
+import type { QueryOptions } from "../../../global.d";
 
 export const query = async (options: QueryOptions) => {
   const { path, params, timeout = DB_CONFIG.timeout } = options;

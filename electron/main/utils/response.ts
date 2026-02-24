@@ -1,21 +1,28 @@
 import log from "../logger";
+import type { QueryResponse } from "../../../global.d";
+
 export const response = {
-  ok: (data?: { code?: number; message?: string; data?: unknown }) => {
-    const res = {
+  ok: <T = null>(payload?: { code?: number; message?: string; data?: T }) => {
+    const res: QueryResponse = {
       code: 200,
       message: "success",
-      data: null,
-      ...data,
+      data: null as any,
+      ...payload,
     };
     log.info(`response ok | code: ${res.code} | msg: ${res.message}`);
     return res;
   },
 
-  error: (data?: { code?: number; message?: string; data?: unknown }) => {
-    const res = {
+  error: <T = null>(payload?: {
+    code?: number;
+    message?: string;
+    data?: T;
+  }) => {
+    const res: QueryResponse = {
       code: 500,
       message: "failure",
-      ...data,
+      data: null as any,
+      ...payload,
     };
     log.error(`response error | code: ${res.code} | msg: ${res.message}`);
     return res;
