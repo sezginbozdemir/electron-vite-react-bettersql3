@@ -2,6 +2,7 @@ import { app } from "electron";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import { existsSync, mkdirSync } from "fs";
+import log from "../logger";
 
 export const getAppHand = () => {
   return app.getPath("appData");

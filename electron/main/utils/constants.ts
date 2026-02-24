@@ -17,11 +17,12 @@ export const UPDATE_CHANNEL = {
   MSG: "update-render-msg",
 };
 
-export enum UPDATE_CODE {
-  error = -1,
-  checking = 0,
-  updateAvaible = 1,
-  updateNotAvaible = 2,
-  downloadProgress = 3,
-  updateDownloaded = 4,
-}
+const updateCode = {
+  error: -1,
+  checking: 0,
+  updateAvaible: 1,
+  updateNotAvaible: 2,
+  downloadProgress: 3,
+  updateDownloaded: 4,
+} as const;
+export type UPDATE_CODE = (typeof updateCode)[keyof typeof updateCode];
