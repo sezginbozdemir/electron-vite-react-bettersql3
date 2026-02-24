@@ -2,6 +2,7 @@ import { BrowserWindow, Menu, Tray, app } from "electron";
 import path from "path";
 import { getDirname } from "../utils";
 import { isProd } from "../utils";
+import log from "../logger";
 
 const dirname = getDirname(import.meta.url);
 const preloadIndex = path.join(dirname, "../preload/index.js");
@@ -20,7 +21,7 @@ export const createWindow = () => {
     height: 600,
     center: true,
     icon: iconPath,
-    titleBarStyle: "hidden",
+    titleBarStyle: "default", // "hidden"
     webPreferences: {
       preload: preloadIndex,
       sandbox: false,
@@ -36,7 +37,11 @@ export const createWindow = () => {
 
   Menu.setApplicationMenu(null);
 
-  mainWindow.webContents.openDevTools();
+  if (env.NODE_ENV === "development") {
+    mainWindow.webContents.on("did-finish-load", () => {
+      mainWindow.webContents.openDevTools({ mode: "detach" });
+    });
+  }
 };
 
 export const addTray = () => {

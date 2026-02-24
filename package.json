@@ -15,6 +15,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.21",
+    "@tanstack/react-router": "^1.162.9",
+    "@tanstack/react-table": "^8.21.3",
     "axios": "^1.13.5",
     "better-sqlite3": "^12.6.2",
     "dayjs": "^1.11.19",

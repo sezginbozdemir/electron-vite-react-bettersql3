@@ -14,9 +14,12 @@ export default defineConfig(({ command }) => {
   return {
     base: "./",
     plugins: [
+      tanstackRouter({
+        target: "react",
+        autoCodeSplitting: true,
+      }),
       react(),
       tailwindcss(),
-      tanstackRouter(),
       electron({
         main: {
           entry: "electron/main/index.ts",
