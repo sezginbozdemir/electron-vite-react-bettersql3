@@ -16,7 +16,7 @@ export type QueryResponse<T = unknown> = {
   message: string;
   data: T | null;
 };
-interface QueryOptions {
+export interface QueryOptions {
   path: string;
   params?: Record<string, any>;
   timeout?: number;

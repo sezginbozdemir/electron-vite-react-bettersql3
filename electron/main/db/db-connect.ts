@@ -6,6 +6,7 @@ import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import * as schema from "./schema";
 import log from "../logger";
+import { isProd } from "../utils";
 
 const dirname = getDirname(import.meta.url);
 
@@ -20,11 +21,14 @@ const sqlite = new Database(DB_PATH, {
 export let db: BetterSQLite3Database<typeof schema>;
 
 export const dbConnect = async () => {
+  const migrationsDir = isProd
+    ? path.join(dirname, "../migrations")
+    : path.join(process.resourcesPath, "migrations");
   db = drizzle(sqlite, { schema });
-  if (process.env.NODE_ENV === "production") {
+  if (isProd) {
     try {
       migrate(db, {
-        migrationsFolder: path.join(dirname, "../../../migrations"),
+        migrationsFolder: migrationsDir,
       });
     } catch (e) {
       log.error("dbConnect error ", e);

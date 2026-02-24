@@ -17,7 +17,7 @@ export const UPDATE_CHANNEL = {
   MSG: "update-render-msg",
 };
 
-const updateCode = {
+export const UPDATE_CODE = {
   error: -1,
   checking: 0,
   updateAvaible: 1,
@@ -25,4 +25,3 @@ const updateCode = {
   downloadProgress: 3,
   updateDownloaded: 4,
 } as const;
-export type UPDATE_CODE = (typeof updateCode)[keyof typeof updateCode];

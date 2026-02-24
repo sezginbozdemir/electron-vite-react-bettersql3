@@ -2,11 +2,16 @@
   "name": "electron-vite-react-bettersql3",
   "private": true,
   "version": "0.0.1",
+  "description": "Minimal Electron + React + Vite desktop app with Drizzle ORM and better-sqlite3.",
+  "author": "Sezgin Bozdemir <sezdev@proton.me>",
   "type": "commonjs",
   "main": "./dist-electron/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && electron-rebuild && electron-builder",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "set ELECTRON_RUN_AS_NODE=true && electron ./node_modules/drizzle-kit/bin.cjs push",
     "preview": "vite preview"
   },
   "dependencies": {

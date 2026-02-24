@@ -12,7 +12,10 @@
     "migrations/**/*",
     ".env"
   ],
-  "extraResources": [],
+  "extraResources": [
+    { "from": "migrations", "to": "migrations" },
+    { "from": "assets", "to": "assets" }
+  ],
   "asarUnpack": [],
   "electronDownload": {
     "mirror": "https://npmmirror.com/mirrors/electron/"
