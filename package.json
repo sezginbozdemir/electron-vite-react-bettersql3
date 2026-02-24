@@ -11,27 +11,37 @@
   "dependencies": {
     "axios": "^1.13.5",
     "better-sqlite3": "^12.6.2",
+    "dayjs": "^1.11.19",
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "electron-log": "^5.4.3",
     "electron-updater": "^6.8.3",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@electron/rebuild": "^4.0.3",
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-query-devtools": "^5.91.3",
+    "@tanstack/react-table-devtools": "^8.21.3",
+    "@tanstack/router-devtools": "^1.162.8",
+    "@tanstack/router-plugin": "^1.162.8",
     "@tsconfig/node22": "^22.0.5",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",
+    "@vitest/coverage-v8": "^4.0.18",
     "electron": "^40.6.0",
     "electron-builder": "^26.8.1",
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-electron": "^0.29.0",
-    "vite-plugin-electron-renderer": "^0.14.6"
+    "vite-plugin-electron-renderer": "^0.14.6",
+    "vitest": "^4.0.18"
   }
 }
