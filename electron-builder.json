@@ -20,8 +20,11 @@
   "electronDownload": {
     "mirror": "https://npmmirror.com/mirrors/electron/"
   },
+  "linux": {
+    "icon": "assets/crow.png"
+  },
   "mac": {
-    "icon": "public/vite.svg",
+    "icon": "assets/crow.png",
     "target": ["dmg"]
   },
   "dmg": {
@@ -40,7 +43,7 @@
     ]
   },
   "win": {
-    "icon": "public/vite.svg",
+    "icon": "assets/crow.png",
     "target": [
       {
         "target": "nsis",
