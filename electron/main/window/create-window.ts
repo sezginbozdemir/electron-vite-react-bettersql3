@@ -2,6 +2,7 @@ import { BrowserWindow, Menu, Tray, app } from "electron";
 import path from "path";
 import { getDirname } from "../utils";
 import { isProd } from "../utils";
+import log from "../logger";
 
 const dirname = getDirname(import.meta.url);
 const preloadIndex = path.join(dirname, "preload.js");
@@ -29,7 +30,7 @@ export const createWindow = () => {
     },
   });
   mainWindow.webContents.on("preload-error", (_event, preloadPath, error) => {
-    console.error("PRELOAD ERROR:", preloadPath, error);
+    log.error("[PRELOAD ERROR]:", preloadPath, error);
   });
   if (env.NODE_ENV === "development" && env.DEV_SERVER_URL) {
     mainWindow.loadURL(env.DEV_SERVER_URL);
