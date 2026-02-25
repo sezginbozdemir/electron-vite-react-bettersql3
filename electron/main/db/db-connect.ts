@@ -22,16 +22,15 @@ export let db: BetterSQLite3Database<typeof schema>;
 
 export const dbConnect = async () => {
   const migrationsDir = isProd
-    ? path.join(dirname, "../migrations")
-    : path.join(process.resourcesPath, "migrations");
+    ? path.join(process.resourcesPath, "migrations")
+    : path.join(dirname, "../migrations");
   db = drizzle(sqlite, { schema });
-  if (isProd) {
-    try {
-      migrate(db, {
-        migrationsFolder: migrationsDir,
-      });
-    } catch (e) {
-      log.error("dbConnect error ", e);
-    }
+
+  try {
+    migrate(db, {
+      migrationsFolder: migrationsDir,
+    });
+  } catch (e) {
+    log.error("dbConnect error ", e);
   }
 };

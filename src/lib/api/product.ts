@@ -4,6 +4,13 @@ export const getProduct = async (id: any) => {
     params: { id },
   });
 };
+export const getAllProducts = async () => {
+  return window.api.db({
+    path: "db/product/getAll",
+    params: {},
+  });
+};
+
 export const deleteProduct = async (id: any) => {
   return window.api.db({
     path: "db/product/delete",

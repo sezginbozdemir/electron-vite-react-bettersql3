@@ -3,17 +3,24 @@ import { db } from "../db-connect";
 import { products } from "../schema";
 import { response } from "../../utils/response";
 export class ProductService {
-  static async getOne(id: number) {
-    const res = await db.select().from(products).where(eq(products.id, id));
+  static getAll() {
+    const res = db.select().from(products).all();
+    if (!res) {
+      return response.error({ message: "error listing all products" });
+    }
+    return response.ok({ data: res });
+  }
+  static getOne(id: number) {
+    const res = db.select().from(products).where(eq(products.id, id)).all();
 
     if (!res) {
       return response.error({ message: "product not found" });
     }
-    return response.ok({ data: res?.[0] });
+    return response.ok({ data: res });
   }
-  static async delete(id: number) {
-    return await db.transaction(async (tx) => {
-      const product = await tx.delete(products).where(eq(products.id, id));
+  static delete(id: number) {
+    return db.transaction((tx) => {
+      const product = tx.delete(products).where(eq(products.id, id)).run();
       if (!product) {
         tx.rollback();
         response.error({ message: "product not found" });
@@ -23,12 +30,13 @@ export class ProductService {
     });
   }
 
-  static async update(id: number, data: any) {
-    return await db.transaction(async (tx) => {
-      const product = await tx
+  static update(id: number, data: any) {
+    return db.transaction((tx) => {
+      const product = tx
         .update(products)
         .set(data)
-        .where(eq(products.id, id));
+        .where(eq(products.id, id))
+        .run();
       if (!product) {
         tx.rollback();
         return response.error();
@@ -36,9 +44,9 @@ export class ProductService {
       return response.ok();
     });
   }
-  static async insert(data: any) {
-    return await db.transaction(async (tx) => {
-      const product = await tx.insert(products).values(data);
+  static insert(data: any) {
+    return db.transaction((tx) => {
+      const product = tx.insert(products).values(data).run();
       if (!product) {
         tx.rollback();
         return response.error();

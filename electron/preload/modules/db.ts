@@ -1,9 +1,8 @@
 import { DB_CONFIG } from "../../main/utils/constants";
 import { ipcRenderer } from "electron";
-import log from "../../main/logger";
 import type { QueryOptions } from "../../../global.d";
 
-export const query = async (options: QueryOptions) => {
+export const query = (options: QueryOptions) => {
   const { path, params, timeout = DB_CONFIG.timeout } = options;
 
   const renderRequest = ipcRenderer.invoke(path, params);
@@ -18,10 +17,10 @@ export const query = async (options: QueryOptions) => {
   const requestResult = Promise.race([renderRequest, timeoutHand]);
 
   try {
-    const res = await requestResult;
+    const res = requestResult;
     return res;
   } catch (error) {
-    log.warn(
+    console.warn(
       `queryDB failed | channel: ${path} | params: ${JSON.stringify(params)} | error: ${error}`,
     );
   } finally {
