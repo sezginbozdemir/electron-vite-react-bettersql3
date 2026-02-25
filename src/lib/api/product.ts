@@ -1,31 +1,33 @@
-export const getProduct = async (id: any) => {
-  return window.api.db({
+import type { InsertProduct, Product, UpdateProduct } from "global";
+
+export const getProduct = async (id: number) => {
+  return window.api.db<Product>({
     path: "db/product/getOne",
     params: { id },
   });
 };
 export const getAllProducts = async () => {
-  return window.api.db({
+  return window.api.db<Product[]>({
     path: "db/product/getAll",
     params: {},
   });
 };
 
-export const deleteProduct = async (id: any) => {
+export const deleteProduct = async (id: number) => {
   return window.api.db({
     path: "db/product/delete",
     params: { id },
   });
 };
 
-export const addProduct = async (data: any) => {
+export const addProduct = async (data: InsertProduct) => {
   return window.api.db({
     path: "db/product/add",
     params: data,
   });
 };
 
-export const updateProduct = async (id: any, data: any) => {
+export const updateProduct = async (id: any, data: UpdateProduct) => {
   return window.api.db({
     path: "db/product/update",
     params: { id, data },

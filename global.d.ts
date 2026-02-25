@@ -11,6 +11,13 @@ export interface FsService {
   exists(path: string): Promise<any>;
   stat(path: string): Promise<any>;
 }
+
+export type {
+  Product,
+  InsertProduct,
+  UpdateProduct,
+} from "./electron/main/db/schema/products";
+
 export type QueryResponse<T = unknown> = {
   code: number;
   message: string;

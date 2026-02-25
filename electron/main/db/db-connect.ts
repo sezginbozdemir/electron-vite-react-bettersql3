@@ -10,7 +10,9 @@ import { isProd } from "../utils";
 
 const dirname = getDirname(import.meta.url);
 
-const DB_PATH = path.join(getAppHand(), APP_NAME, DB_CONFIG.dbFileName);
+const DB_PATH = isProd
+  ? path.join(getAppHand(), APP_NAME, DB_CONFIG.dbFileName)
+  : path.join(dirname, "../__database/", DB_CONFIG.dbFileName);
 
 generateDirPath(DB_PATH);
 

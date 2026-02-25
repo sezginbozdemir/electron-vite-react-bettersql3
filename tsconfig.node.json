@@ -10,6 +10,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": false,
@@ -22,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts", "electron", "drizzle.config.ts"]
+  "include": ["vite.config.ts", "electron", "drizzle.config.ts", "global.d.ts"]
 }

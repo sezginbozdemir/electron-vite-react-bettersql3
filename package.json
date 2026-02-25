@@ -8,7 +8,7 @@
   "main": "./dist-electron/main.js",
   "scripts": {
     "dev": "electron-rebuild && vite",
-    "build": "tsc -b && vite build && electron-rebuild && electron-builder",
+    "build": "npm run db:generate && tsc -b && vite build && electron-rebuild && electron-builder",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "set ELECTRON_RUN_AS_NODE=true && electron ./node_modules/drizzle-kit/bin.cjs migrate",
     "db:push": "set ELECTRON_RUN_AS_NODE=true && electron ./node_modules/drizzle-kit/bin.cjs push",

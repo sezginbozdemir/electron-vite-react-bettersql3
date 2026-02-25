@@ -1,11 +1,6 @@
 import { getAllProducts, deleteProduct } from "@/lib/api/product";
 import { useEffect, useState } from "react";
-
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-};
+import { type Product } from "global";
 
 export function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
