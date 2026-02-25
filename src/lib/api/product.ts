@@ -27,7 +27,7 @@ export const addProduct = async (data: any) => {
 
 export const updateProduct = async (id: any, data: any) => {
   return window.api.db({
-    path: "db/product/getOne",
+    path: "db/product/update",
     params: { id, data },
   });
 };
