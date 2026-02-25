@@ -38,13 +38,15 @@ interface Logger {
   debug: (msg: string) => Promise<void>;
   silly: (msg: string) => Promise<void>;
 }
-declare interface Window {
-  api: {
-    db: <T = unknown>(options: QueryOptions) => Promise<QueryResponse<T>>;
-    fs: FsService;
-    env: "development" | "production";
-    update: AppUpdate;
-    logger: Logger;
-    createWindow: () => Promise<string>;
-  };
+declare global {
+  interface Window {
+    api: {
+      db: <T = unknown>(options: QueryOptions) => Promise<QueryResponse<T>>;
+      fs: FsService;
+      env: "development" | "production";
+      update: AppUpdate;
+      logger: Logger;
+      createWindow: () => Promise<string>;
+    };
+  }
 }

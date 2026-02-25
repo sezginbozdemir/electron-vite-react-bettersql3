@@ -5,7 +5,7 @@
   "description": "Minimal Electron + React + Vite desktop app with Drizzle ORM and better-sqlite3.",
   "author": "Sezgin Bozdemir <sezdev@proton.me>",
   "type": "commonjs",
-  "main": "./dist-electron/index.js",
+  "main": "./dist-electron/main.js",
   "scripts": {
     "dev": "electron-rebuild && vite",
     "build": "tsc -b && vite build && electron-rebuild && electron-builder",

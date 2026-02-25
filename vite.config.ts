@@ -26,12 +26,26 @@ export default defineConfig(({ command }) => {
           vite: {
             build: {
               rollupOptions: {
+                output: {
+                  entryFileNames: "main.js",
+                },
                 external: ["better-sqlite3"],
               },
             },
           },
         },
-        preload: { input: "electron/preload/index.ts" },
+        preload: {
+          entry: "electron/preload/index.ts",
+          vite: {
+            build: {
+              rollupOptions: {
+                output: {
+                  entryFileNames: "preload.js",
+                },
+              },
+            },
+          },
+        },
         renderer: {},
       }),
     ],

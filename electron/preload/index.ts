@@ -6,6 +6,7 @@ import { createWindow } from "./modules/window-pool";
 import { fsService } from "./modules/fs";
 import { loadEnv } from "../env";
 loadEnv();
+console.log("exposing api");
 contextBridge.exposeInMainWorld("api", {
   db: query,
   fs: fsService,
