@@ -1,14 +1,10 @@
 import { defineConfig } from "drizzle-kit";
-import { APP_NAME, DB_CONFIG } from "./electron/main/utils/constants";
-import path, { dirname } from "path";
+import { dbPath } from "./electron/main/utils";
+import { dirname } from "path";
 import { existsSync, mkdirSync } from "fs";
 import log from "./electron/main/logger";
-
-const dbPath = path.join(
-  process.env.APPDATA ?? "",
-  APP_NAME,
-  DB_CONFIG.dbFileName,
-);
+import { loadEnv } from "./electron/main/utils";
+loadEnv();
 
 export const generateDirPath = (dirString: string) => {
   try {

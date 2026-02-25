@@ -2,7 +2,7 @@ import { BrowserWindow, app } from "electron";
 import log from "./logger";
 import { dbInit } from "./db-init";
 import { addTray, createWindow } from "./window/create-window";
-import { loadEnv } from "../env";
+import { loadEnv } from "../main/utils";
 loadEnv();
 
 app.whenReady().then(async () => {
