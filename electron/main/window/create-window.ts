@@ -5,9 +5,9 @@ import { isProd } from "../utils";
 import log from "../logger";
 
 const dirname = getDirname(import.meta.url);
-const preloadIndex = path.join(dirname, "preload.js");
+const preloadBuild = path.join(dirname, "preload.js");
 const env = process.env;
-const electronBuild = path.join(dirname, "../../dist/index.html");
+const rendererBuild = path.join(dirname, "../dist/index.html");
 const iconPath = isProd
   ? path.join(process.resourcesPath, "assets/crow.png")
   : path.join(dirname, "../assets/crow.png");
@@ -23,7 +23,7 @@ export const createWindow = () => {
     icon: iconPath,
     titleBarStyle: "default", // "hidden"
     webPreferences: {
-      preload: preloadIndex,
+      preload: preloadBuild,
       sandbox: false,
       nodeIntegration: false,
       contextIsolation: true,
@@ -32,15 +32,17 @@ export const createWindow = () => {
   mainWindow.webContents.on("preload-error", (_event, preloadPath, error) => {
     log.error("[PRELOAD ERROR]:", preloadPath, error);
   });
-  if (env.NODE_ENV === "development" && env.DEV_SERVER_URL) {
+  if (isProd) {
+    mainWindow.loadFile(rendererBuild);
+  } else if (env.DEV_SERVER_URL) {
     mainWindow.loadURL(env.DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(electronBuild);
+    throw new Error("DEV_SERVER_URL is not set in development mode");
   }
 
   Menu.setApplicationMenu(null);
 
-  if (env.NODE_ENV === "development") {
+  if (!isProd) {
     mainWindow.webContents.on("did-finish-load", () => {
       mainWindow.webContents.openDevTools({ mode: "detach" });
     });
