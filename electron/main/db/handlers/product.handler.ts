@@ -1,21 +1,51 @@
 import { ProductService } from "../services/product.service";
 import { ipcMain } from "electron";
-
-ipcMain.handle("db/product/getOne", (_event, { id }) => {
-  return ProductService.getOne(id);
+import log from "../../logger";
+import type { QueryResponse } from "../../../../global.d";
+import { response, toErrorResponse } from "../../utils/response";
+ipcMain.handle("db/product/getOne", (_event, { id }): QueryResponse => {
+  try {
+    return response.ok({ data: ProductService.getOne(id) });
+  } catch (err: unknown) {
+    log.warn("[PRODUCT HANDLER] product/getOne failed", { id, err });
+    return toErrorResponse(err);
+  }
 });
-ipcMain.handle("db/product/getAll", (_event, _arg) => {
-  return ProductService.getAll();
+ipcMain.handle("db/product/getAll", (_event, _arg): QueryResponse => {
+  try {
+    return response.ok({ data: ProductService.getAll() });
+  } catch (err: unknown) {
+    log.error("[PRODUCT HANDLER] product/getAll failed", err);
+    return toErrorResponse(err);
+  }
 });
 
-ipcMain.handle("db/product/delete", (_event, { id }) => {
-  return ProductService.delete(id);
+ipcMain.handle("db/product/delete", (_event, { id }): QueryResponse => {
+  try {
+    ProductService.delete(id);
+    return response.ok();
+  } catch (err: unknown) {
+    log.error("[PRODUCT HANDLER] product/delete failed", { id, err });
+    return toErrorResponse(err);
+  }
 });
 
-ipcMain.handle("db/product/add", (_event, data) => {
-  return ProductService.insert(data);
+ipcMain.handle("db/product/add", (_event, data): QueryResponse => {
+  try {
+    ProductService.insert(data);
+    return response.ok();
+  } catch (err: unknown) {
+    log.error("[PRODUCT HANDLER] product/insert failed", { data, err });
+    return toErrorResponse(err);
+  }
 });
 
-ipcMain.handle("db/product/update", (_event, arg) => {
-  return ProductService.update(arg.id, arg.data);
+ipcMain.handle("db/product/update", (_event, arg): QueryResponse => {
+  try {
+    ProductService.update(arg.id, arg.data);
+    return response.ok();
+  } catch (err: unknown) {
+    log.error("[PRODUCT HANDLER] product/update failed", { arg, err });
+    return toErrorResponse(err);
+  }
 });

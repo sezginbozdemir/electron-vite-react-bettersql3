@@ -18,6 +18,20 @@ app.whenReady().then(async () => {
   });
 });
 
+process.on("uncaughtException", (err) => {
+  log.error("[MAIN] uncaughtException:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  log.error("[MAIN] unhandledRejection:", err);
+});
+app.on("render-process-gone", (_event, _webContents, details) => {
+  log.error("[MAIN] renderer-process-gone:", details);
+});
+app.on("child-process-gone", (_event, details) => {
+  log.error("[MAIN] child-process-gone:", details);
+});
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });

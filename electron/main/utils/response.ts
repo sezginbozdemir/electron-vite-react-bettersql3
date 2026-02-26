@@ -1,5 +1,6 @@
 import type { QueryResponse } from "../../../global";
 import log from "../logger";
+import { DatabaseError, NotFoundError, ValidationError } from "./errors";
 export const response = {
   ok: <T = any>(payload?: {
     code?: number;
@@ -20,13 +21,38 @@ export const response = {
     message?: string;
     data?: T;
   }): QueryResponse<T> => {
+    const { data, ...rest } = payload ?? {};
     const res = {
       code: 500,
       message: "failure",
-      data: null as any,
-      ...payload,
+      data: null,
+      ...rest,
     };
-    log.error(`response error | code: ${res.code} | msg: ${res.message}`);
+    log.error(
+      `response error | code: ${res.code} | msg: ${res.message}`,
+      data ?? {},
+    );
     return res;
   },
+};
+
+export const toErrorResponse = (err: unknown): QueryResponse => {
+  if (err instanceof NotFoundError) {
+    return response.error({ code: err.code, message: err.message });
+  }
+  if (err instanceof ValidationError) {
+    return response.error({ code: err.code, message: err.message });
+  }
+  if (err instanceof DatabaseError) {
+    return response.error({
+      code: err.code,
+      message: "internal error",
+      data: err,
+    });
+  }
+
+  if (err instanceof Error) {
+    return response.error({ code: 500, message: "internal error" });
+  }
+  return response.error({ code: 500, message: `Unknown err` });
 };

@@ -1,45 +1,39 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db-connect";
 import { products } from "../schema";
-import { response } from "../../utils/response";
-import type { QueryResponse } from "../../../../global";
 import {
   InsertProductModel,
   UpdateProductModel,
   type Product,
 } from "../schema/products";
+import { ValidationError, NotFoundError } from "../../utils/errors";
+
 export class ProductService {
-  static getAll(): QueryResponse<Product[]> {
+  static getAll(): Product[] {
     const result = db.select().from(products).all();
-    return response.ok({ data: result });
+    return result;
   }
 
-  static getOne(id: number): QueryResponse<Product> {
+  static getOne(id: number): Product | null {
     const result = db.select().from(products).where(eq(products.id, id)).get();
+    if (!result) throw new NotFoundError("product not found");
 
-    if (!result) {
-      return response.error({ message: "product not found" });
-    }
-    return response.ok({ data: result });
+    return result;
   }
 
-  static delete(id: number): QueryResponse<null> {
+  static delete(id: number) {
     return db.transaction((tx) => {
       const result = tx.delete(products).where(eq(products.id, id)).run();
       if (result.changes === 0) {
         tx.rollback();
-        return response.error({ message: "product not found" });
+        throw new NotFoundError("product not found");
       }
-
-      return response.ok();
     });
   }
 
-  static update(id: number, data: unknown): QueryResponse<null> {
+  static update(id: number, data: unknown) {
     const parsed = UpdateProductModel.safeParse(data);
-    if (!parsed.success) {
-      return response.error({ message: parsed.error.message });
-    }
+    if (!parsed.success) throw new ValidationError(parsed.error);
 
     return db.transaction((tx) => {
       const result = tx
@@ -49,24 +43,21 @@ export class ProductService {
         .run();
       if (result.changes === 0) {
         tx.rollback();
-        return response.error({ message: "update failed" });
+        throw new Error("update failed");
       }
-      return response.ok();
     });
   }
 
-  static insert(data: unknown): QueryResponse<null> {
+  static insert(data: unknown) {
     const parsed = InsertProductModel.safeParse(data);
-    if (!parsed.success) {
-      return response.error({ message: parsed.error.message });
-    }
+    if (!parsed.success) throw new ValidationError(parsed.error);
+
     return db.transaction((tx) => {
       const result = tx.insert(products).values(parsed.data).run();
       if (result.changes === 0) {
         tx.rollback();
-        return response.error();
+        throw new Error("insert failed");
       }
-      return response.ok();
     });
   }
 }
