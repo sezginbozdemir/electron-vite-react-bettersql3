@@ -1,13 +1,15 @@
 import { BrowserWindow, app } from "electron";
 import log from "./logger";
-import { dbInit } from "./db-init";
 import { addTray, createWindow } from "./window/create-window";
 import { loadEnv } from "../main/utils";
+import "./db/handlers/index";
+import "./fs/handlers/index";
+import { dbConnect } from "./db/db-connect";
 loadEnv();
 
 app.whenReady().then(async () => {
   log.info("main init");
-  await dbInit();
+  await dbConnect();
   createWindow();
   addTray();
   app.on("activate", () => {

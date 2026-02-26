@@ -8,6 +8,7 @@ export const Route = createRootRoute({
 const links = [
   { to: "/", label: "Dashboard", exact: true },
   { to: "/products", label: "Products" },
+  { to: "/fs", label: "FS Test" },
   { to: "/about", label: "About" },
 ];
 

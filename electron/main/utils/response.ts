@@ -1,6 +1,7 @@
 import type { QueryResponse } from "../../../global";
 import log from "../logger";
 import { DatabaseError, NotFoundError, ValidationError } from "./errors";
+import { DrizzleQueryError } from "drizzle-orm";
 export const response = {
   ok: <T = any>(payload?: {
     code?: number;
@@ -43,11 +44,12 @@ export const toErrorResponse = (err: unknown): QueryResponse => {
   if (err instanceof ValidationError) {
     return response.error({ code: err.code, message: err.message });
   }
-  if (err instanceof DatabaseError) {
+  if (err instanceof DrizzleQueryError) {
+    const dbErr = new DatabaseError(err);
     return response.error({
-      code: err.code,
+      code: dbErr.code,
       message: "internal error",
-      data: err,
+      data: dbErr,
     });
   }
 
