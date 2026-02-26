@@ -1,7 +1,6 @@
 import { DB_CONFIG } from "../../main/utils/constants";
 import { ipcRenderer } from "electron";
 import type { QueryOptions } from "../../../global.d";
-import log from "../../main/logger";
 
 export const query = (options: QueryOptions) => {
   const { path, params, timeout = DB_CONFIG.timeout } = options;
@@ -14,17 +13,9 @@ export const query = (options: QueryOptions) => {
       resolve({ code: 500, message: "request timed out" });
     }, timeout);
   });
+  clearTimeout(timer);
 
-  const requestResult = Promise.race([renderRequest, timeoutHand]);
-
-  try {
-    const res = requestResult;
-    return res;
-  } catch (error) {
-    log.warn(
-      `queryDB failed | channel: ${path} | params: ${JSON.stringify(params)} | error: ${error}`,
-    );
-  } finally {
+  return Promise.race([renderRequest, timeoutHand]).finally(() => {
     clearTimeout(timer);
-  }
+  });
 };
