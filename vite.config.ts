@@ -35,7 +35,7 @@ export default defineConfig(({ command }) => {
           },
         },
         preload: {
-          entry: "electron/preload/index.ts",
+          input: "electron/preload/index.ts",
           vite: {
             build: {
               rollupOptions: {

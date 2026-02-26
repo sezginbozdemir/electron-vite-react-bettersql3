@@ -1,6 +1,6 @@
 import { getAllProducts, deleteProduct } from "@/lib/api/product";
 import { useEffect, useState } from "react";
-import { type Product } from "global";
+import { type Product } from "../../global.d";
 
 export function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);

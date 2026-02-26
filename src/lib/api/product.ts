@@ -1,4 +1,4 @@
-import type { InsertProduct, Product, UpdateProduct } from "global";
+import type { InsertProduct, Product, UpdateProduct } from "../../../global.d";
 
 export const getProduct = async (id: number) => {
   return window.api.db<Product>({
@@ -27,7 +27,7 @@ export const addProduct = async (data: InsertProduct) => {
   });
 };
 
-export const updateProduct = async (id: any, data: UpdateProduct) => {
+export const updateProduct = async (id: number, data: UpdateProduct) => {
   return window.api.db({
     path: "db/product/update",
     params: { id, data },

@@ -73,7 +73,7 @@ export function HomePage() {
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Btn onClick={() => run(() => getProduct(id))}>Get</Btn>
+          <Btn onClick={() => run(() => getProduct(Number(id)))}>Get</Btn>
           <Btn
             onClick={() =>
               run(() => addProduct({ name, price: Number(price) }))
@@ -83,12 +83,14 @@ export function HomePage() {
           </Btn>
           <Btn
             onClick={() =>
-              run(() => updateProduct(id, { name, price: Number(price) }))
+              run(() =>
+                updateProduct(Number(id), { name, price: Number(price) }),
+              )
             }
           >
             Update
           </Btn>
-          <Btn danger onClick={() => run(() => deleteProduct(id))}>
+          <Btn danger onClick={() => run(() => deleteProduct(Number(id)))}>
             Delete
           </Btn>
         </div>
