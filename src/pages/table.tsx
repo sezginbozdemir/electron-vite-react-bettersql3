@@ -1,8 +1,9 @@
 import { getAllProducts, deleteProduct } from "@/lib/api/product";
 import { useEffect, useState } from "react";
 import { type Product } from "../../global.d";
+import { Btn } from "@/components/common/btn";
 
-export function ProductsPage() {
+export function TablePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,25 +17,23 @@ export function ProductsPage() {
     await deleteProduct(id);
     load();
   }
-
   useEffect(() => {
     load();
   }, []);
 
   return (
-    <div className="p-6 max-w-2xl">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-white text-sm font-medium tracking-wide">
-          Products
-        </h1>
-        <button
-          onClick={load}
-          className="text-xs text-neutral-500 hover:text-neutral-300 transition-colors"
-        >
-          Refresh
-        </button>
+    <div className="max-w-2xl flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-[10px] uppercase tracking-widest text-neutral-500 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded">
+            dev
+          </span>
+          <h1 className="text-white text-sm font-semibold tracking-widest uppercase">
+            Table
+          </h1>
+        </div>
+        <Btn onClick={load}>Refresh</Btn>
       </div>
-
       <div className="border border-neutral-800 rounded-lg overflow-hidden">
         <div className="grid grid-cols-[60px_1fr_120px_80px] px-4 py-2 border-b border-neutral-800">
           <span className="text-[10px] uppercase tracking-widest text-neutral-600">
@@ -48,19 +47,16 @@ export function ProductsPage() {
           </span>
           <span className="text-[10px] uppercase tracking-widest text-neutral-600"></span>
         </div>
-
         {loading && (
           <div className="py-10 text-center text-xs text-neutral-600">
             Loading...
           </div>
         )}
-
         {!loading && products.length === 0 && (
           <div className="py-10 text-center text-xs text-neutral-600">
             No products
           </div>
         )}
-
         {!loading &&
           products.map((p) => (
             <div
@@ -70,18 +66,14 @@ export function ProductsPage() {
               <span className="text-neutral-600 text-xs">{p.id}</span>
               <span className="text-neutral-200 text-xs">{p.name}</span>
               <span className="text-neutral-400 text-xs">${p.price}</span>
-              <button
-                onClick={() => remove(p.id)}
-                className="text-xs text-red-500/50 hover:text-red-500 transition-colors text-left"
-              >
+              <Btn danger onClick={() => remove(p.id)}>
                 Delete
-              </button>
+              </Btn>
             </div>
           ))}
       </div>
-
       {!loading && (
-        <p className="mt-3 text-[11px] text-neutral-700">
+        <p className="text-[11px] text-neutral-700">
           {products.length} products
         </p>
       )}

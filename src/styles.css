@@ -2,13 +2,13 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-body {
-  margin: 0;
-  min-height: 100vh;
-}
-
+html,
+body,
 #app {
-  padding: 16px;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -131,4 +131,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
