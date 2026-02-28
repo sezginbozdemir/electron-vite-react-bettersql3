@@ -1,7 +1,30 @@
-# Electron + Vite + React + Drizzle + BetterSQLite3 Boilerplate
+# Electron + Vite + React + Drizzle + SQLite Boilerplate
 
-A modern desktop app starter with a local-first SQLite database, type-safe ORM, and fast HMR dev experience.
+A local-first desktop app starter with type-safe ORM, fast HMR, and a bundled SQLite database.
 
-## Tech Stack
+**Stack:** Electron · Vite · React · Drizzle ORM · better-sqlite3
 
-**[Electron]** — **[Vite]** — **[React]** — **[Drizzle ORM]** — **[better-sqlite3]**
+---
+
+## Getting Started
+
+```bash
+npm install
+```
+
+Copy `.env.example` to `.env` and set your variables, then:
+
+```bash
+npm run db:generate
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+Packaged releases will be output to the project root.
+
+---
